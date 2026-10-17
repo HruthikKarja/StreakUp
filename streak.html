@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreakUp - Daily Habit Tracker</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar" aria-label="Main Navigation">
+        <div class="nav-container">
+            <a href="home.html" class="nav-brand">
+                <span class="logo-icon">🔥</span>
+                <span class="brand-text">StreakUp</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="home.html" class="nav-link">Dashboard</a>
+                <a href="streak.html" class="nav-link active" aria-current="page">Daily Tracker</a>
+                <a href="monthly.html" class="nav-link">Monthly Calendar</a>
+            </div>
+
+            <div class="nav-user">
+                <span class="user-greeting">Hi, <strong id="navUsername">User</strong></span>
+                <button type="button" id="logoutBtn" class="btn btn-outline btn-sm">Log Out</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="main-content">
+        <!-- Page Header & Date Navigation -->
+        <header class="daily-header">
+            <div>
+                <h1>Daily Habit Tracker</h1>
+                <p class="subtitle">Log and verify your daily completion to maintain your streak.</p>
+            </div>
+
+            <!-- Date Selector Controls -->
+            <div class="date-navigator" aria-label="Select Date">
+                <button type="button" id="prevDayBtn" class="btn btn-secondary btn-icon" title="Previous Day" aria-label="Previous Day">
+                    &larr;
+                </button>
+                <div class="date-input-wrap">
+                    <input type="date" id="selectedDateInput" aria-label="Date">
+                </div>
+                <button type="button" id="nextDayBtn" class="btn btn-secondary btn-icon" title="Next Day" aria-label="Next Day">
+                    &rarr;
+                </button>
+                <button type="button" id="todayBtn" class="btn btn-outline">
+                    Today
+                </button>
+            </div>
+        </header>
+
+        <!-- Current Selected Date Banner -->
+        <section class="selected-date-banner" id="dateStatusBanner">
+            <div class="date-title-group">
+                <h2 id="displaySelectedDate">Date</h2>
+                <span id="dateRelativeBadge" class="badge">Today</span>
+            </div>
+            <p id="dateStatusDescription" class="status-desc">Loading status...</p>
+        </section>
+
+        <!-- Daily Progress Overview Card -->
+        <section class="daily-summary-grid">
+            <div class="card status-indicator-card" id="dayStatusCard">
+                <div class="card-inner">
+                    <div class="status-badge-lg" id="statusBadgeLg">
+                        <span id="statusIcon">⚡</span>
+                        <span id="statusText">Incomplete</span>
+                    </div>
+                    <div class="status-metrics">
+                        <div class="metric-item">
+                            <span class="metric-label">Completion Rate</span>
+                            <strong class="metric-value" id="dailyPercentage">0%</strong>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Completed</span>
+                            <strong class="metric-value" id="dailyFraction">0 / 0</strong>
+                        </div>
+                    </div>
+                </div>
+                <!-- Progress bar -->
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="dailyProgressBar" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- Streaks Summary Card -->
+            <div class="card streak-card-compact">
+                <div class="streak-mini-item">
+                    <div class="mini-icon">🔥</div>
+                    <div>
+                        <span class="mini-label">Current Streak</span>
+                        <strong class="mini-val" id="trackerCurrentStreak">0 days</strong>
+                    </div>
+                </div>
+                <div class="streak-mini-item">
+                    <div class="mini-icon">🏆</div>
+                    <div>
+                        <span class="mini-label">Longest Streak</span>
+                        <strong class="mini-val" id="trackerLongestStreak">0 days</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Active Habits Checklist for Selected Date -->
+        <section class="card habit-checklist-card" aria-labelledby="checklistHeading">
+            <div class="card-header">
+                <div>
+                    <h2 id="checklistHeading">Habits for This Date</h2>
+                    <p class="card-subtitle" id="checklistSubtitle">
+                        Only habits created on or before this date are shown.
+                    </p>
+                </div>
+            </div>
+
+            <div id="futureWarning" class="alert-box alert-info" style="display: none;">
+                ℹ️ <strong>Future Date:</strong> Habits cannot be completed in advance. You can preview active habits, but checkboxes are disabled.
+            </div>
+
+            <!-- Habits list rendered here -->
+            <div id="dailyHabitsContainer" class="habits-list" aria-live="polite">
+                <!-- Dynamically loaded -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>StreakUp Habit Tracker &bull; Consistent habits, measurable progress.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/streak.js"></script>
+</body>
+</html>

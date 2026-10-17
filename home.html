@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreakUp - Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar" aria-label="Main Navigation">
+        <div class="nav-container">
+            <a href="home.html" class="nav-brand">
+                <span class="logo-icon">🔥</span>
+                <span class="brand-text">StreakUp</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="home.html" class="nav-link active" aria-current="page">Dashboard</a>
+                <a href="streak.html" class="nav-link">Daily Tracker</a>
+                <a href="monthly.html" class="nav-link">Monthly Calendar</a>
+            </div>
+
+            <div class="nav-user">
+                <span class="user-greeting">Hi, <strong id="navUsername">User</strong></span>
+                <button type="button" id="logoutBtn" class="btn btn-outline btn-sm">Log Out</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="main-content">
+        <!-- Hero Header -->
+        <header class="dashboard-header">
+            <div class="header-text">
+                <h1>Welcome back, <span id="welcomeUsername">User</span>!</h1>
+                <p class="subtitle" id="todayDateDisplay">Today is loading...</p>
+            </div>
+            <div class="quick-nav-actions">
+                <a href="streak.html" class="btn btn-primary">
+                    <span>⚡ Daily Habit Tracker</span>
+                </a>
+                <a href="monthly.html" class="btn btn-secondary">
+                    <span>📅 Monthly Calendar</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Stats Overview Grid -->
+        <section class="stats-grid" aria-label="Dashboard Statistics">
+            <!-- Active Habits -->
+            <div class="stat-card">
+                <div class="stat-icon icon-blue">📋</div>
+                <div class="stat-info">
+                    <span class="stat-label">Active Habits</span>
+                    <strong class="stat-value" id="statActiveHabits">0</strong>
+                    <span class="stat-subtext">Active today</span>
+                </div>
+            </div>
+
+            <!-- Completed Today -->
+            <div class="stat-card">
+                <div class="stat-icon icon-green">✅</div>
+                <div class="stat-info">
+                    <span class="stat-label">Completed Today</span>
+                    <strong class="stat-value" id="statCompletedToday">0</strong>
+                    <span class="stat-subtext" id="statCompletedFraction">0 of 0 habits</span>
+                </div>
+            </div>
+
+            <!-- Daily Completion Rate -->
+            <div class="stat-card">
+                <div class="stat-icon icon-purple">🎯</div>
+                <div class="stat-info">
+                    <span class="stat-label">Today's Progress</span>
+                    <strong class="stat-value" id="statTodayPercentage">0%</strong>
+                    <div class="progress-bar-container" aria-hidden="true">
+                        <div class="progress-bar" id="statProgressBar" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Streak -->
+            <div class="stat-card highlight-streak">
+                <div class="stat-icon icon-orange">🔥</div>
+                <div class="stat-info">
+                    <span class="stat-label">Current Streak</span>
+                    <strong class="stat-value" id="statCurrentStreak">0 <span class="unit">days</span></strong>
+                    <span class="stat-subtext" id="statStreakStatus">Complete all habits to build your streak</span>
+                </div>
+            </div>
+
+            <!-- Longest Streak -->
+            <div class="stat-card">
+                <div class="stat-icon icon-gold">🏆</div>
+                <div class="stat-info">
+                    <span class="stat-label">Longest Streak</span>
+                    <strong class="stat-value" id="statLongestStreak">0 <span class="unit">days</span></strong>
+                    <span class="stat-subtext">Personal record</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Habits Management Section -->
+        <div class="dashboard-columns">
+            <!-- Left / Main: Habit Management & Today's Checklist -->
+            <section class="card habit-manager-card" aria-labelledby="habitsHeading">
+                <div class="card-header">
+                    <div>
+                        <h2 id="habitsHeading">Today's Habits & Management</h2>
+                        <p class="card-subtitle">Mark habits complete for today or manage your active habits list.</p>
+                    </div>
+                </div>
+
+                <!-- Add Habit Form -->
+                <form id="addHabitForm" class="add-habit-form" novalidate>
+                    <div class="form-row">
+                        <input 
+                            type="text" 
+                            id="habitNameInput" 
+                            placeholder="Add a new habit (e.g., Read 20 pages, 30 min Workout)..." 
+                            maxlength="60"
+                            required
+                        >
+                        <button type="submit" class="btn btn-primary">
+                            + Add Habit
+                        </button>
+                    </div>
+                    <span class="field-error" id="habitFormError" aria-live="polite"></span>
+                </form>
+
+                <!-- Habit List Container -->
+                <div class="habits-list-wrapper">
+                    <div class="list-legend">
+                        <span class="legend-title">Active Habits for Today</span>
+                        <span class="legend-hint">Changes automatically update your streak & calendar</span>
+                    </div>
+                    <div id="activeHabitsList" class="habits-list" aria-live="polite">
+                        <!-- Populated dynamically by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Sidebar: Quick Tips & Streak Info -->
+            <aside class="sidebar-cards">
+                <div class="card streak-rules-card">
+                    <h3>Streak Rules</h3>
+                    <ul class="rules-list">
+                        <li>
+                            <span class="rule-icon">✨</span>
+                            <div>
+                                <strong>100% Completion:</strong> A day qualifies for your streak only when every active habit is completed.
+                            </div>
+                        </li>
+                        <li>
+                            <span class="rule-icon">⏳</span>
+                            <div>
+                                <strong>Daily Reset:</strong> A missed day resets the current streak to zero until you complete another qualifying day.
+                            </div>
+                        </li>
+                        <li>
+                            <span class="rule-icon">🛡️</span>
+                            <div>
+                                <strong>Historical Integrity:</strong> Adding or deleting a habit today never alters your past streak history.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card quick-actions-card">
+                    <h3>Explore More</h3>
+                    <p>Track past dates or inspect your monthly consistency rate:</p>
+                    <div class="nav-action-links">
+                        <a href="streak.html" class="nav-action-item">
+                            <span class="action-emoji">⚡</span>
+                            <div>
+                                <strong>Daily Tracker</strong>
+                                <small>Switch dates and view day percentages</small>
+                            </div>
+                            <span class="arrow">→</span>
+                        </a>
+                        <a href="monthly.html" class="nav-action-item">
+                            <span class="action-emoji">📅</span>
+                            <div>
+                                <strong>Monthly History</strong>
+                                <small>Review your full calendar grid</small>
+                            </div>
+                            <span class="arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>StreakUp Habit Tracker &bull; Consistent habits, measurable progress.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/habits.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

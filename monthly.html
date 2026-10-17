@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreakUp - Monthly Calendar</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar" aria-label="Main Navigation">
+        <div class="nav-container">
+            <a href="home.html" class="nav-brand">
+                <span class="logo-icon">🔥</span>
+                <span class="brand-text">StreakUp</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="home.html" class="nav-link">Dashboard</a>
+                <a href="streak.html" class="nav-link">Daily Tracker</a>
+                <a href="monthly.html" class="nav-link active" aria-current="page">Monthly Calendar</a>
+            </div>
+
+            <div class="nav-user">
+                <span class="user-greeting">Hi, <strong id="navUsername">User</strong></span>
+                <button type="button" id="logoutBtn" class="btn btn-outline btn-sm">Log Out</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="main-content">
+        <!-- Monthly Header & Navigation Controls -->
+        <header class="monthly-header">
+            <div>
+                <h1>Monthly Calendar & Progress</h1>
+                <p class="subtitle">Review your consistency over time. Click any day to see historical breakdown.</p>
+            </div>
+
+            <div class="month-navigator" aria-label="Calendar Navigation">
+                <button type="button" id="prevMonthBtn" class="btn btn-secondary btn-icon" title="Previous Month" aria-label="Previous Month">
+                    &larr;
+                </button>
+                <h2 id="currentMonthYear" class="month-title">October 2026</h2>
+                <button type="button" id="nextMonthBtn" class="btn btn-secondary btn-icon" title="Next Month" aria-label="Next Month">
+                    &rarr;
+                </button>
+                <button type="button" id="currentMonthBtn" class="btn btn-outline">
+                    Current Month
+                </button>
+            </div>
+        </header>
+
+        <!-- Monthly Statistics Overview -->
+        <section class="stats-grid stats-grid-monthly" aria-label="Monthly Statistics">
+            <div class="stat-card">
+                <div class="stat-icon icon-blue">📅</div>
+                <div class="stat-info">
+                    <span class="stat-label">Days in Month</span>
+                    <strong class="stat-value" id="monthTotalDays">31</strong>
+                    <span class="stat-subtext" id="monthElapsedDays">0 days passed</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon icon-green">🏆</div>
+                <div class="stat-info">
+                    <span class="stat-label">Qualifying Days</span>
+                    <strong class="stat-value" id="monthQualifyingDays">0</strong>
+                    <span class="stat-subtext">100% completed</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon icon-red">⚠️</div>
+                <div class="stat-info">
+                    <span class="stat-label">Incomplete Days</span>
+                    <strong class="stat-value" id="monthIncompleteDays">0</strong>
+                    <span class="stat-subtext">&lt; 100% with habits</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon icon-purple">📈</div>
+                <div class="stat-info">
+                    <span class="stat-label">Monthly Consistency</span>
+                    <strong class="stat-value" id="monthConsistencyRate">0%</strong>
+                    <span class="stat-subtext">Qualifying / Active days</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calendar and Details Grid Layout -->
+        <div class="monthly-layout">
+            <!-- Calendar Card -->
+            <section class="card calendar-card" aria-labelledby="calendarCardHeading">
+                <div class="calendar-card-header">
+                    <h3 id="calendarCardHeading">Activity Grid</h3>
+                    <div class="calendar-legend">
+                        <span class="legend-item"><span class="dot dot-green"></span> 100% Done</span>
+                        <span class="legend-item"><span class="dot dot-red"></span> Incomplete</span>
+                        <span class="legend-item"><span class="dot dot-neutral"></span> No Habits</span>
+                        <span class="legend-item"><span class="dot dot-future"></span> Future</span>
+                    </div>
+                </div>
+
+                <!-- Calendar Weekdays Header -->
+                <div class="calendar-grid-header">
+                    <span>Sun</span>
+                    <span>Mon</span>
+                    <span>Tue</span>
+                    <span>Wed</span>
+                    <span>Thu</span>
+                    <span>Fri</span>
+                    <span>Sat</span>
+                </div>
+
+                <!-- Calendar Days Grid -->
+                <div id="calendarDaysGrid" class="calendar-grid" role="grid" aria-label="Monthly Calendar Days">
+                    <!-- Populated dynamically by monthly.js -->
+                </div>
+            </section>
+
+            <!-- Day Details Panel -->
+            <aside class="card day-details-card" aria-labelledby="dayDetailsHeading">
+                <div class="card-header">
+                    <div>
+                        <h3 id="dayDetailsHeading">Day Details</h3>
+                        <p class="card-subtitle" id="selectedDateTitle">Click a day on the calendar</p>
+                    </div>
+                    <span id="selectedDateStatusBadge" class="badge">Select Date</span>
+                </div>
+
+                <!-- Completion progress for selected day -->
+                <div class="day-details-progress">
+                    <div class="progress-details-header">
+                        <span class="progress-label">Daily Completion</span>
+                        <strong id="selectedDatePercent">0%</strong>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="selectedDateProgressBar" style="width: 0%;"></div>
+                    </div>
+                    <p id="selectedDateFractionText" class="progress-fraction-text">0 of 0 habits completed</p>
+                </div>
+
+                <!-- Habits active on selected day -->
+                <div class="day-habits-section">
+                    <h4>Active Habits on This Date</h4>
+                    <div id="selectedDateHabitsList" class="day-habits-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <div class="day-details-action">
+                    <a id="openInTrackerBtn" href="streak.html" class="btn btn-primary btn-block">
+                        Open in Daily Tracker &rarr;
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>StreakUp Habit Tracker &bull; Consistent habits, measurable progress.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/monthly.js"></script>
+</body>
+</html>

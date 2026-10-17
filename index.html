@@ -3,32 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StreakUp</title>
-
+    <title>StreakUp - Login</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+<body class="auth-page">
 
-<body>
+    <main class="auth-container">
+        <header class="auth-header">
+            <div class="brand-logo" aria-label="StreakUp">
+                <span class="logo-icon">🔥</span>
+                <h1>StreakUp</h1>
+            </div>
+            <p class="tagline">Build better habits. Maintain daily streaks.</p>
+        </header>
 
-    <h1>StreakUp</h1>
+        <section class="card auth-card" aria-labelledby="loginHeading">
+            <h2 id="loginHeading">Sign In</h2>
+            <p class="card-subtitle">Enter your details to access your habits dashboard.</p>
 
-    <div>
-        <h2>Login</h2>
+            <!-- Already Logged In Banner (hidden by default) -->
+            <div id="alreadyLoggedIn" class="already-logged-in-box" style="display: none;">
+                <p>You are currently signed in as <strong id="currentUsername"></strong>.</p>
+                <div class="btn-group">
+                    <a href="home.html" class="btn btn-primary">Go to Dashboard</a>
+                    <button type="button" id="switchUserBtn" class="btn btn-secondary">Switch Account</button>
+                </div>
+            </div>
 
-        <input type="text" id="username" placeholder="Username">
+            <form id="loginForm" novalidate>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        placeholder="e.g. Alex" 
+                        autocomplete="username"
+                        required
+                    >
+                    <span class="field-error" id="usernameError" aria-live="polite"></span>
+                </div>
 
-        <br><br>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Enter password (min 3 chars)" 
+                        autocomplete="current-password"
+                        required
+                    >
+                    <span class="field-error" id="passwordError" aria-live="polite"></span>
+                </div>
 
-        <input type="password" id="password" placeholder="Password">
+                <button type="submit" id="loginBtn" class="btn btn-primary btn-block">
+                    Sign In
+                </button>
 
-        <br><br>
+                <p id="message" class="auth-message" aria-live="polite"></p>
+            </form>
 
-        <button id="loginBtn">Login</button>
+            <div class="demo-notice" role="note">
+                <span class="demo-badge">Prototype Demo</span>
+                <p>This is a frontend demonstration. No plaintext passwords or sensitive credentials are saved to a server or insecurely stored.</p>
+            </div>
+        </section>
+    </main>
 
-        <p id="message"></p>
-    </div>
-
+    <script src="js/storage.js"></script>
     <script src="js/auth.js"></script>
-
 </body>
 </html>
